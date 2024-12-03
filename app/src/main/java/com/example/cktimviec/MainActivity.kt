@@ -3,6 +3,7 @@ package com.example.cktimviec
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Kiểm tra người dùng đã đăng nhập
         auth = FirebaseAuth.getInstance()
         if (auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -31,47 +33,63 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        // Cấu hình RecyclerView
         jobAdapter = JobAdapter(emptyList())
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = jobAdapter
 
+        // Quan sát dữ liệu công việc từ ViewModel
         jobViewModel.jobs.observe(this) { jobs ->
             jobAdapter.updateList(jobs)
         }
 
-        // Thay đổi banner mỗi 5 giây
+        // Xử lý tìm kiếm
+        binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query = binding.searchBar.text.toString()
+                if (query.isNotEmpty()) {
+                    val intent = Intent(this, SearchActivity::class.java)
+                    intent.putExtra("searchQuery", query)
+                    startActivity(intent)
+                }
+                true
+            } else {
+                false
+            }
+        }
+
+        // Thay đổi banner
         handler = Handler()
         startBannerRotation()
     }
 
+    // Bắt đầu luân phiên banner
     private fun startBannerRotation() {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 changeBanner()
-                handler.postDelayed(this, 2000)  // 5 giây sau sẽ chạy lại
+                handler.postDelayed(this, 2000)
             }
-        }, 2000)  // Bắt đầu sau 5 giây
+        }, 2000)
     }
 
+    // Đổi banner
     private fun changeBanner() {
-        // Ẩn tất cả banner trước
         binding.banner1.visibility = android.view.View.GONE
         binding.bnhai.visibility = android.view.View.GONE
         binding.banner3.visibility = android.view.View.GONE
 
-        // Hiển thị banner theo index
         when (bannerIndex) {
             0 -> binding.banner1.visibility = android.view.View.VISIBLE
             1 -> binding.bnhai.visibility = android.view.View.VISIBLE
             2 -> binding.banner3.visibility = android.view.View.VISIBLE
         }
 
-        // Cập nhật index cho lần thay đổi tiếp theo
         bannerIndex = (bannerIndex + 1) % 3
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacksAndMessages(null)  // Xoá handler khi activity bị hủy
+        handler.removeCallbacksAndMessages(null)
     }
 }

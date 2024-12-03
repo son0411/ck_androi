@@ -7,7 +7,6 @@ import com.example.cktimviec.data.Job
 import com.google.firebase.firestore.FirebaseFirestore
 
 class JobViewModel : ViewModel() {
-
     private val _jobs = MutableLiveData<List<Job>>()
     val jobs: LiveData<List<Job>> get() = _jobs
 
@@ -31,8 +30,7 @@ class JobViewModel : ViewModel() {
                 }
                 _jobs.value = jobList
             }
-            .addOnFailureListener { exception ->
-                // Log lỗi nếu cần
+            .addOnFailureListener {
                 _jobs.value = emptyList()
             }
     }
