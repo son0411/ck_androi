@@ -21,11 +21,14 @@ class JobViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { documents ->
                 val jobList = documents.map { doc ->
+                    // Fetch salary as Long
+                    val salary = doc.getLong("salary") ?: 0L // Default to 0 if not found
+
                     Job(
                         title = doc.getString("title") ?: "",
                         company = doc.getString("company") ?: "",
                         location = doc.getString("location") ?: "",
-                        salary = doc.getString("salary") ?: ""
+                        salary = salary
                     )
                 }
                 _jobs.value = jobList
@@ -34,4 +37,5 @@ class JobViewModel : ViewModel() {
                 _jobs.value = emptyList()
             }
     }
+
 }

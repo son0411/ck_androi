@@ -8,7 +8,7 @@ data class Job(
     val title: String = "",
     val company: String = "",
     val location: String = "",
-    val salary: String = "",
+    val salary: Long = 0L,  // Đổi từ String sang Long
     val description: String = "",
     val requirements: String = ""
 ): Parcelable

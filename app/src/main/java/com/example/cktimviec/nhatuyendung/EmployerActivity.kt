@@ -19,22 +19,27 @@ class EmployerActivity : AppCompatActivity() {
             val title = binding.etTitle.text.toString().trim()
             val company = binding.etCompany.text.toString().trim()
             val location = binding.etLocation.text.toString().trim()
-            val salary = binding.etSalary.text.toString().trim()
+            val salaryString = binding.etSalary.text.toString().trim()
             val description = binding.etDescription.text.toString().trim()
             val requirements = binding.etRequirements.text.toString().trim()
 
-            if (title.isEmpty() || company.isEmpty() || location.isEmpty() || salary.isEmpty() ||
-                description.isEmpty() || requirements.isEmpty()) {
+            if (title.isEmpty() || company.isEmpty() || location.isEmpty() || salaryString.isEmpty() ||
+                description.isEmpty() || requirements.isEmpty()
+            ) {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Chuyển đổi salary từ String thành Long
+            val salary = salaryString.toLongOrNull()
+                ?: 0L // Nếu không thể chuyển đổi, gán giá trị mặc định là 0L
 
             val job = Job(
                 id = "", // ID sẽ được tự động tạo bởi Firebase
                 title = title,
                 company = company,
                 location = location,
-                salary = salary,
+                salary = salary, // Gán giá trị Long cho salary
                 description = description,
                 requirements = requirements
             )
@@ -42,7 +47,7 @@ class EmployerActivity : AppCompatActivity() {
         }
     }
 
-    private fun postJob(job: Job) {
+        private fun postJob(job: Job) {
         val jobRepository = JobRepository()
         jobRepository.addJob(job,
             onSuccess = {

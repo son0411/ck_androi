@@ -91,10 +91,10 @@
                 android:layout_marginEnd="8dp" />
 
             <Button
-                android:id="@+id/salaryFilter"
+                android:id="@+id/salaryFilterUSD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mức lương"
+                android:text="Mức lương (USD)"
                 android:background="@drawable/rounded_button_background"
                 android:textColor="@color/black"
                 android:layout_marginEnd="8dp" />
