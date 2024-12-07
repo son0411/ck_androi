@@ -10,5 +10,7 @@ data class Job(
     val location: String = "",
     val salary: Long = 0L,  // Đổi từ String sang Long
     val description: String = "",
-    val requirements: String = ""
+    val requirements: String = "",
+    val imageUrl: String = "" // Thêm trường lưu URL ảnh
+
 ): Parcelable

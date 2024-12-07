@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -40,6 +39,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Yêu cầu" />
+
+    <!-- Thêm ImageView để hiển thị ảnh đại diện -->
+    <ImageView
+        android:id="@+id/ivJobImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@android:drawable/ic_menu_camera"
+        android:contentDescription="Ảnh công việc"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Thêm nút chọn ảnh -->
+    <Button
+        android:id="@+id/btnSelectImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn ảnh" />
 
     <Button
         android:id="@+id/btnPostJob"

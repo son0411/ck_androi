@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Plugin để sử dụng Google Services (Firebase)
     id ("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -50,8 +51,9 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.firebase:firebase-auth:22.0.0") // Phiên bản mới nhất có thể thay đổi
-    implementation ("com.google.firebase:firebase-auth-ktx:22.1.1")
-
+    implementation ("com.google.firebase:firebase-storage:20.2.0")
+    implementation ("com.github.bumptech.glide:glide:4.15.1") // Thêm Glide
+    kapt ("com.github.bumptech.glide:compiler:4.15.1")
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.google.firebase:firebase-database:20.2.1")
