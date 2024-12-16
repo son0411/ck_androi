@@ -3,11 +3,11 @@ package com.example.cktimviec
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cktimviec.data.Job
 import com.example.cktimviec.databinding.ActivityMainBinding
 import com.example.cktimviec.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -55,6 +55,33 @@ class MainActivity : AppCompatActivity() {
                 true
             } else {
                 false
+            }
+        }
+
+        // Xử lý Bottom Navigation View
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_home -> {
+                    Log.d("MainActivity", "Home selected")
+                    // Thêm logic xử lý nếu cần
+                    true
+                }
+                R.id.menu_profile -> {
+                    Log.d("MainActivity", "Navigating to ProfileActivity")
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                R.id.menu_notifications -> {
+                    Log.d("MainActivity", "Notifications selected")
+                    // Thêm logic xử lý nếu cần
+                    true
+                }
+                R.id.menu_account -> {
+                    Log.d("MainActivity", "Navigating to AccountActivity")
+                    startActivity(Intent(this, AccountActivity::class.java))
+                    true
+                }
+                else -> false
             }
         }
 
