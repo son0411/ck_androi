@@ -13,6 +13,8 @@ import com.example.cktimviec.data.JobRepository
 import java.io.ByteArrayOutputStream
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 class EmployerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEmployerBinding
@@ -27,6 +29,23 @@ class EmployerActivity : AppCompatActivity() {
         binding = ActivityEmployerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Cập nhật dữ liệu cho các Spinner
+        val jobTypes = listOf("Toàn thời gian", "Bán thời gian")
+        val genderOptions = listOf("Nam", "Nữ", "Không yêu cầu")
+        val jobLevels = listOf("Nhân viên", "Trưởng phòng", "Giám đốc")
+
+        val jobTypeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, jobTypes)
+        jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerJobType.adapter = jobTypeAdapter
+
+        val genderAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderOptions)
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerGender.adapter = genderAdapter
+
+        val jobLevelAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, jobLevels)
+        jobLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerJobLevel.adapter = jobLevelAdapter
+
         // Bắt sự kiện chọn ảnh
         binding.btnSelectImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -40,25 +59,42 @@ class EmployerActivity : AppCompatActivity() {
             val salaryString = binding.etSalary.text.toString().trim()
             val description = binding.etDescription.text.toString().trim()
             val requirements = binding.etRequirements.text.toString().trim()
+            val experience = binding.etExperience.text.toString().trim()
+            val numberOfPeopleString = binding.etNumberOfPeople.text.toString().trim()
+            val deadline = binding.etDeadline.text.toString().trim()
 
+            // Kiểm tra thông tin đã đủ chưa
             if (title.isEmpty() || company.isEmpty() || location.isEmpty() || salaryString.isEmpty() ||
-                description.isEmpty() || requirements.isEmpty()
-            ) {
+                description.isEmpty() || requirements.isEmpty() || experience.isEmpty() ||
+                numberOfPeopleString.isEmpty() || deadline.isEmpty()) {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Chuyển đổi salary từ String thành Long
-            val salary = salaryString.toLongOrNull() ?: 0L // Nếu không thể chuyển đổi, gán giá trị mặc định là 0L
+            // Chuyển đổi salary và numberOfPeople từ String thành Long
+            val salary = salaryString.toLongOrNull() ?: 0L
+            val numberOfPeople = numberOfPeopleString.toIntOrNull() ?: 0
 
+            // Lấy dữ liệu từ Spinner
+            val jobType = binding.spinnerJobType.selectedItem.toString()
+            val gender = binding.spinnerGender.selectedItem.toString()
+            val jobLevel = binding.spinnerJobLevel.selectedItem.toString()
+
+            // Tạo đối tượng Job mới
             val job = Job(
-                id = "", // ID sẽ được tự động tạo bởi Firebase
+                id = "",
                 title = title,
                 company = company,
                 location = location,
-                salary = salary, // Gán giá trị Long cho salary
+                salary = salary,
                 description = description,
-                requirements = requirements
+                requirements = requirements,
+                experience = experience,
+                jobType = jobType,
+                numberOfPeople = numberOfPeople,
+                gender = gender,
+                jobLevel = jobLevel,
+                deadline = deadline
             )
 
             // Gửi công việc với ảnh
@@ -77,7 +113,6 @@ class EmployerActivity : AppCompatActivity() {
 
     private fun postJob(job: Job, imageUri: Uri?) {
         val jobRepository = JobRepository()
-        // Kiểm tra xem có ảnh không
         imageUri?.let {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
             val byteArrayOutputStream = ByteArrayOutputStream()
@@ -91,7 +126,6 @@ class EmployerActivity : AppCompatActivity() {
             uploadTask.addOnSuccessListener {
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
                     val imageUrl = uri.toString()
-                    // Cập nhật job với URL ảnh
                     val updatedJob = job.copy(id = job.id, imageUrl = imageUrl)
                     jobRepository.addJob(updatedJob, onSuccess = {
                         Toast.makeText(this, "Đăng việc thành công!", Toast.LENGTH_SHORT).show()
@@ -104,7 +138,6 @@ class EmployerActivity : AppCompatActivity() {
                 Toast.makeText(this, "Tải ảnh lên thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         } ?: run {
-            // Nếu không có ảnh, chỉ đăng công việc bình thường
             jobRepository.addJob(job, onSuccess = {
                 Toast.makeText(this, "Đăng việc thành công!", Toast.LENGTH_SHORT).show()
                 clearFields()
@@ -121,6 +154,9 @@ class EmployerActivity : AppCompatActivity() {
         binding.etSalary.text.clear()
         binding.etDescription.text.clear()
         binding.etRequirements.text.clear()
+        binding.etExperience.text.clear()
+        binding.etNumberOfPeople.text.clear()
+        binding.etDeadline.text.clear()
         binding.ivJobImage.setImageResource(android.R.drawable.ic_menu_camera) // Reset ảnh
     }
 }

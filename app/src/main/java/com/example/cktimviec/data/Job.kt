@@ -1,4 +1,5 @@
 package com.example.cktimviec.data
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -11,6 +12,11 @@ data class Job(
     val salary: Long = 0L,  // Đổi từ String sang Long
     val description: String = "",
     val requirements: String = "",
-    val imageUrl: String = "" // Thêm trường lưu URL ảnh
-
+    val experience: String = "",  // Kinh nghiệm
+    val jobType: String = "",  // Hình thức (toàn thời gian, bán thời gian)
+    val numberOfPeople: Int = 0,  // Số lượng người cần tuyển
+    val gender: String = "",  // Giới tính
+    val jobLevel: String = "",  // Cấp bậc
+    val deadline: String = "",  // Hạn nộp hồ sơ
+    val imageUrl: String = ""  // URL ảnh
 ): Parcelable

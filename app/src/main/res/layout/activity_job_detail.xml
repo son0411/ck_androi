@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Hình ảnh đại diện công việc -->
+        <ImageView
+            android:id="@+id/ivJobImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rounded_button_background"
+            android:layout_gravity="center"/>
+
+        <!-- Tiêu đề công việc -->
+        <TextView
+            android:id="@+id/tvJobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiêu đề công việc"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Tên công ty -->
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Công ty ABC"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Địa điểm làm việc -->
+        <TextView
+            android:id="@+id/tvJobLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa điểm: Hà Nội"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Mức lương -->
+        <TextView
+            android:id="@+id/tvJobSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lương: 20,000,000 VND"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"/>
+
+        <!-- Kinh nghiệm -->
+        <TextView
+            android:id="@+id/tvJobExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kinh nghiệm: 2 năm"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Hình thức công việc -->
+        <TextView
+            android:id="@+id/tvJobType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hình thức: Toàn thời gian"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Số lượng người cần tuyển -->
+        <TextView
+            android:id="@+id/tvJobNumberOfPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng người cần tuyển: 5"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Giới tính -->
+        <TextView
+            android:id="@+id/tvJobGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giới tính: Không yêu cầu"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Cấp bậc -->
+        <TextView
+            android:id="@+id/tvJobLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cấp bậc: Nhân viên"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Hạn nộp hồ sơ -->
+        <TextView
+            android:id="@+id/tvJobDeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hạn nộp hồ sơ: 31/12/2024"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"/>
+
+        <!-- Mô tả công việc -->
+        <TextView
+            android:id="@+id/tvJobDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả công việc: Bạn sẽ làm việc trong môi trường năng động, có cơ hội thăng tiến cao."
+            android:layout_marginBottom="8dp" />
+
+        <!-- Yêu cầu công việc -->
+        <TextView
+            android:id="@+id/tvJobRequirements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Yêu cầu công việc: Có khả năng làm việc dưới áp lực, có kinh nghiệm trong lĩnh vực công nghệ."
+            android:layout_marginBottom="16dp" />
+
+        <!-- Quyền lợi -->
+        <TextView
+            android:id="@+id/tvJobBenefits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quyền lợi: Chế độ bảo hiểm đầy đủ, thưởng cuối năm, cơ hội đi du lịch công ty."
+            android:layout_marginBottom="8dp" />
+
+        <!-- Nút liên hệ -->
+        <Button
+            android:id="@+id/btnContactEmployer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Liên hệ nhà tuyển dụng"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Nút ứng tuyển -->
+        <Button
+            android:id="@+id/btnApplyJob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ứng tuyển" />
+    </LinearLayout>
+</ScrollView>

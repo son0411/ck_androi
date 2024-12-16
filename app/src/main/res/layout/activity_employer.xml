@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!-- Các trường nhập thông tin cũ -->
     <EditText
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
@@ -40,7 +41,40 @@
         android:layout_height="wrap_content"
         android:hint="Yêu cầu" />
 
-    <!-- Thêm ImageView để hiển thị ảnh đại diện -->
+    <!-- Các trường mới -->
+    <EditText
+        android:id="@+id/etExperience"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kinh nghiệm (năm)" />
+
+    <Spinner
+        android:id="@+id/spinnerJobType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etNumberOfPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số lượng người cần tuyển" />
+
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spinnerJobLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etDeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hạn nộp hồ sơ (ngày)" />
+
     <ImageView
         android:id="@+id/ivJobImage"
         android:layout_width="match_parent"
@@ -50,7 +84,6 @@
         android:scaleType="centerCrop"
         android:layout_marginBottom="16dp" />
 
-    <!-- Thêm nút chọn ảnh -->
     <Button
         android:id="@+id/btnSelectImage"
         android:layout_width="match_parent"
