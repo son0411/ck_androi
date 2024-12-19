@@ -1,156 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-        <!-- Hình ảnh đại diện công việc -->
+        <!-- Nút Back -->
         <ImageView
-            android:id="@+id/ivJobImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/rounded_button_background"
-            android:layout_gravity="center"/>
-
-        <!-- Tiêu đề công việc -->
-        <TextView
-            android:id="@+id/tvJobTitle"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiêu đề công việc"
-            android:textStyle="bold"
+            android:layout_gravity="start"
+            android:contentDescription="Back"
+            android:padding="8dp"
+            android:src="@drawable/ic_back" />
+
+        <!-- Tiêu đề Toolbar -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Chi Tiết Công Việc"
+            android:textColor="#000000"
             android:textSize="20sp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            android:textStyle="bold" />
 
-        <!-- Tên công ty -->
-        <TextView
-            android:id="@+id/tvCompanyName"
+        <!-- Nút Chia sẻ -->
+        <ImageView
+            android:id="@+id/btnShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Công ty ABC"
-            android:textStyle="italic"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="end"
+            android:contentDescription="Share"
+            android:padding="8dp"
+            android:src="@drawable/ic_share" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <!-- Địa điểm làm việc -->
-        <TextView
-            android:id="@+id/tvJobLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Địa điểm: Hà Nội"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+    <!-- Nội dung ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-        <!-- Mức lương -->
-        <TextView
-            android:id="@+id/tvJobSalary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lương: 20,000,000 VND"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center"/>
-
-        <!-- Kinh nghiệm -->
-        <TextView
-            android:id="@+id/tvJobExperience"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kinh nghiệm: 2 năm"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
-
-        <!-- Hình thức công việc -->
-        <TextView
-            android:id="@+id/tvJobType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hình thức: Toàn thời gian"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
-
-        <!-- Số lượng người cần tuyển -->
-        <TextView
-            android:id="@+id/tvJobNumberOfPeople"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số lượng người cần tuyển: 5"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
-
-        <!-- Giới tính -->
-        <TextView
-            android:id="@+id/tvJobGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giới tính: Không yêu cầu"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
-
-        <!-- Cấp bậc -->
-        <TextView
-            android:id="@+id/tvJobLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cấp bậc: Nhân viên"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
-
-        <!-- Hạn nộp hồ sơ -->
-        <TextView
-            android:id="@+id/tvJobDeadline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hạn nộp hồ sơ: 31/12/2024"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center"/>
-
-        <!-- Mô tả công việc -->
-        <TextView
-            android:id="@+id/tvJobDescription"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mô tả công việc: Bạn sẽ làm việc trong môi trường năng động, có cơ hội thăng tiến cao."
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <!-- Yêu cầu công việc -->
-        <TextView
-            android:id="@+id/tvJobRequirements"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Yêu cầu công việc: Có khả năng làm việc dưới áp lực, có kinh nghiệm trong lĩnh vực công nghệ."
-            android:layout_marginBottom="16dp" />
+            <!-- Header -->
 
-        <!-- Quyền lợi -->
-        <TextView
-            android:id="@+id/tvJobBenefits"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Quyền lợi: Chế độ bảo hiểm đầy đủ, thưởng cuối năm, cơ hội đi du lịch công ty."
-            android:layout_marginBottom="8dp" />
+            <ImageView
+                android:id="@+id/ivJobImage"
+                android:layout_width="105dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_button_background" />
 
-        <!-- Nút liên hệ -->
-        <Button
-            android:id="@+id/btnContactEmployer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Liên hệ nhà tuyển dụng"
-            android:layout_marginBottom="8dp" />
+            <TextView
+                android:id="@+id/tvJobTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhân Viên Marketing Tổ Chức Sự Kiện Giáo Dục"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#000000" />
 
-        <!-- Nút ứng tuyển -->
-        <Button
-            android:id="@+id/btnApplyJob"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ứng tuyển" />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/tvCompanyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CÔNG TY CỔ PHẦN BABYLONS"
+                android:textStyle="italic"
+                android:textSize="16sp"
+                android:textColor="#888888"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Thông tin chính -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <!-- Mức lương -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/salary" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvJobSalary"
+                        android:text="9 - 12 triệu"
+                        android:textSize="16sp"
+                        android:textColor="#00A651" />
+                </LinearLayout>
+
+                <!-- Địa điểm -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/location" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvJobLocation"
+                        android:text="Hồ Chí Minh"
+                        android:textSize="16sp"
+                        android:textColor="#00A651" />
+                </LinearLayout>
+
+                <!-- Kinh nghiệm -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/experience" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvJobExperience"
+                        android:text="Không yêu cầu"
+                        android:textSize="16sp"
+                        android:textColor="#00A651" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+    <!-- Các thông tin bổ sung -->
+            <!-- Hình thức công việc, số lượng người, giới tính... -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông tin chung"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Bọc các thông tin bổ sung vào một layout mới để dễ dàng kiểm soát kích thước chữ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <!-- Hình thức công việc -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/hinhthuc"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvJobType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hình thức: Toàn thời gian"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Số lượng người cần tuyển -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/soluongnguoi"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvJobNumberOfPeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số lượng người cần tuyển: 5"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Giới tính -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/gt"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvJobGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Giới tính: Không yêu cầu"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Cấp bậc -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ranking"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvJobLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cấp bậc: Nhân viên"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Hạn nộp hồ sơ -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/hannophs"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvJobDeadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hạn nộp hồ sơ: 31/12/2024"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Mô tả công việc -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+
+                    <TextView
+                        android:id="@+id/tvJobDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mô tả công việc: Bạn sẽ làm việc trong môi trường năng động, có cơ hội thăng tiến cao."
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Yêu cầu công việc -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+
+                    <TextView
+                        android:id="@+id/tvJobRequirements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Yêu cầu công việc: Có khả năng làm việc dưới áp lực, có kinh nghiệm trong lĩnh vực công nghệ."
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <!-- Quyền lợi -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/tvJobBenefits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Quyền lợi: Chế độ bảo hiểm đầy đủ, thưởng cuối năm, cơ hội đi du lịch công ty."
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Nút ứng tuyển -->
+            <Button
+                android:id="@+id/btnApplyJob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00A651"
+                android:text="Ứng tuyển ngay"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp" />
+
+            <!-- Nút liên hệ nhà tuyển dụng -->
+            <Button
+                android:id="@+id/btnContactEmployer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
+                android:text="Liên hệ Nhà Tuyển Dụng"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

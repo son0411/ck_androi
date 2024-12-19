@@ -6,11 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var btnUpload: Button
+    private lateinit var btnPost: Button  // Khai báo nút Đăng
     private lateinit var tvSelectedFile: TextView
     private val PICK_FILE_REQUEST = 1
 
@@ -18,16 +19,28 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        Log.d("ProfileActivity", "ProfileActivity started")
-
         btnUpload = findViewById(R.id.btn_upload)
+        btnPost = findViewById(R.id.btn_post)  // Ánh xạ nút Đăng
         tvSelectedFile = findViewById(R.id.tv_selected_file)
 
-        // Xử lý khi nhấn nút Chọn tệp
+        // Xử lý khi nhấn nút Tải CV
         btnUpload.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*"
             startActivityForResult(intent, PICK_FILE_REQUEST)
+        }
+
+        // Xử lý khi nhấn nút Đăng
+        btnPost.setOnClickListener {
+            // Kiểm tra nếu đã chọn tệp
+            val selectedFile = tvSelectedFile.text.toString()
+            if (selectedFile.contains("Tệp đã chọn:")) {
+                // Hiển thị thông báo đăng thành công
+                showToast("Đã đăng CV thành công")
+            } else {
+                // Nếu chưa chọn tệp, yêu cầu người dùng chọn tệp
+                showToast("Vui lòng chọn CV trước khi đăng")
+            }
         }
     }
 
@@ -41,5 +54,10 @@ class ProfileActivity : AppCompatActivity() {
                 tvSelectedFile.text = "Không chọn được tệp"
             }
         }
+    }
+
+    // Hàm hiển thị thông báo Toast
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

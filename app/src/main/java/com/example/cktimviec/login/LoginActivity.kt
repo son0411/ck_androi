@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cktimviec.MainActivity
 import com.example.cktimviec.databinding.ActivityLoginBinding
 import com.example.cktimviec.nhatuyendung.EmployerActivity
+import com.example.cktimviec.ChatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -64,11 +65,19 @@ class LoginActivity : AppCompatActivity() {
                         if (role == "admin") {
                             startActivity(Intent(this, EmployerActivity::class.java))
                         } else {
-                            startActivity(Intent(this, MainActivity::class.java))
+                            // Kiểm tra xem người dùng đã cung cấp thông tin chưa
+                            firestore.collection("userInfo").document(userId)
+                                .get()
+                                .addOnSuccessListener { userInfoDoc ->
+                                    if (userInfoDoc.exists()) {
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                    } else {
+                                        startActivity(Intent(this, ChatActivity::class.java))
+                                    }
+                                    finish()
+                                }
                         }
-                        finish()
                     } else {
-                        // Nếu không tìm thấy tài liệu người dùng
                         Toast.makeText(this, "Người dùng không tồn tại trong hệ thống", Toast.LENGTH_SHORT).show()
                     }
                 }

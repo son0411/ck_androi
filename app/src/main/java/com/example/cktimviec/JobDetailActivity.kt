@@ -25,6 +25,34 @@ class JobDetailActivity : AppCompatActivity() {
         binding.btnContactEmployer.setOnClickListener {
             // Ví dụ: mở ứng dụng gửi email hoặc gọi điện
         }
+        // Xử lý sự kiện nút Back
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            // Kết thúc Activity hiện tại (nếu cần)
+            finish()
+        }
+// Xử lý sự kiện nút Share
+        binding.btnShare.setOnClickListener {
+            // Nội dung cần chia sẻ
+            val shareText = """
+        Công việc: Nhân Viên Marketing Tổ Chức Sự Kiện Giáo Dục
+        Công ty: CÔNG TY CỔ PHẦN BABYLONS
+        Mức lương: 9 - 12 triệu
+        Địa điểm: Hồ Chí Minh
+        Kinh nghiệm: Không yêu cầu
+        Hãy ứng tuyển ngay!
+    """.trimIndent()
+
+            // Intent chia sẻ
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain" // Kiểu dữ liệu
+                putExtra(Intent.EXTRA_TEXT, shareText) // Nội dung chia sẻ
+            }
+
+            // Hiển thị giao diện chọn ứng dụng để chia sẻ
+            startActivity(Intent.createChooser(shareIntent, "Chia sẻ công việc qua"))
+        }
 
         // Sự kiện nút Ứng tuyển
         binding.btnApplyJob.setOnClickListener {
@@ -39,9 +67,9 @@ class JobDetailActivity : AppCompatActivity() {
         binding.tvJobTitle.text = job.title
         binding.tvCompanyName.text = job.company
         binding.tvJobLocation.text = "Địa điểm: ${job.location}"
-        binding.tvJobSalary.text = "Lương: ${job.salary} VND"
-        binding.tvJobDescription.text = job.description
-        binding.tvJobRequirements.text = job.requirements
+        binding.tvJobSalary.text = "Mức lương: ${job.salary} USD"
+        binding.tvJobDescription.text = "Mô tả công việc: ${job.description}"
+        binding.tvJobRequirements.text = "Yêu cầu: ${job.requirements}"
         binding.tvJobExperience.text = "Kinh nghiệm: ${job.experience}"
         binding.tvJobType.text = "Hình thức: ${job.jobType}"
         binding.tvJobNumberOfPeople.text = "Số lượng người cần tuyển: ${job.numberOfPeople}"

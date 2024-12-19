@@ -1,27 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <TextView
+    <!-- Khung chứa -->
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tải CV của bạn"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="362dp"
+        android:background="@drawable/rounded_button_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chọn tệp" />
+        <!-- Biểu tượng thư mục -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:contentDescription="Folder Icon"
+            android:src="@drawable/folder" />
 
-    <TextView
-        android:id="@+id/tv_selected_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Chưa có tệp nào được chọn" />
+        <!-- Tiêu đề chính -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Chưa có CV nào được tải lên"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Thông báo hướng dẫn -->
+        <TextView
+            android:id="@+id/tv_selected_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Tải lên CV có sẵn trong thiết bị để tiếp cận với nhà tuyển dụng"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <!-- Nút tải CV -->
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button_background"
+            android:gravity="center"
+            android:text="Mở file"
+            android:textColor="@android:color/black" />
+
+        <!-- Nút đăng CV -->
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button_background"
+            android:gravity="center"
+            android:text="Đăng CV"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 </LinearLayout>
