@@ -4,6 +4,8 @@
     <!-- Cấp quyền truy cập Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -34,7 +36,24 @@
         <activity android:name=".JobDetailActivity"></activity>
         <activity android:name=".CreateCVActivity"></activity>
         <activity android:name=".nhatuyendung.EmployerActivity" android:exported="true" />
+        <activity android:name=".nhatuyendung.ApplicantListActivity" android:exported="true" />
+        <activity android:name=".nhatuyendung.EmployerMainActivity" android:exported="true" />
+        <activity android:name=".nhatuyendung.ViewApplicantsActivity" android:exported="true" />
+        <activity android:name=".nhatuyendung.JobDetailActivity" android:exported="true" />
+
         <activity android:name=".login.RegisterActivity" android:exported="true" />
 
-    </application>
+        <!-- Khai báo FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.cktimviec.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
+
+
+</application>
 </manifest>

@@ -3,21 +3,86 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#F9F9F9">
 
-    <EditText
-        android:id="@+id/etEmail"
+    <!-- Hình đại diện -->
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="127dp"
+        android:layout_height="143dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_avatar_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login" />
+
+    <!-- Tiêu đề ứng dụng -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ĐĂNG NHẬP"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Nhập email -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:orientation="horizontal"
+        android:background="@drawable/custom_edittext"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp">
 
-    <EditText
-        android:id="@+id/etPassword"
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/email"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:background="@android:color/transparent"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <!-- Nhập mật khẩu -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        android:orientation="horizontal"
+        android:background="@drawable/custom_edittext"
+        android:padding="8dp"
+        android:layout_marginBottom="24dp">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/password"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@android:color/transparent"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <!-- Nút đăng nhập -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -29,4 +94,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register" />
+
 </LinearLayout>

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.cktimviec.data.Job
 import com.example.cktimviec.databinding.ActivityJobDetailBinding
-
+import android.net.Uri
 class JobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobDetailBinding
 
@@ -34,25 +34,29 @@ class JobDetailActivity : AppCompatActivity() {
         }
 // Xử lý sự kiện nút Share
         binding.btnShare.setOnClickListener {
-            // Nội dung cần chia sẻ
+            // Nội dung chia sẻ
             val shareText = """
-        Công việc: Nhân Viên Marketing Tổ Chức Sự Kiện Giáo Dục
-        Công ty: CÔNG TY CỔ PHẦN BABYLONS
-        Mức lương: 9 - 12 triệu
-        Địa điểm: Hồ Chí Minh
-        Kinh nghiệm: Không yêu cầu
-        Hãy ứng tuyển ngay!
+        Công việc: ${job?.title}
+        Công ty: ${job?.company}
+        Mức lương: ${job?.salary} USD
+        Địa điểm: ${job?.location}
+        Kinh nghiệm: ${job?.experience}
+        Hãy ứng tuyển ngay tại: [Link công việc]
     """.trimIndent()
 
-            // Intent chia sẻ
+            // Intent chia sẻ với hình ảnh
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain" // Kiểu dữ liệu
-                putExtra(Intent.EXTRA_TEXT, shareText) // Nội dung chia sẻ
+                type = "image/*" // Kiểu dữ liệu là hình ảnh
+
+                // Gửi cả text và hình ảnh
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                putExtra(Intent.EXTRA_STREAM, Uri.parse(job?.imageUrl)) // Hình ảnh công việc
             }
 
             // Hiển thị giao diện chọn ứng dụng để chia sẻ
             startActivity(Intent.createChooser(shareIntent, "Chia sẻ công việc qua"))
         }
+
 
         // Sự kiện nút Ứng tuyển
         binding.btnApplyJob.setOnClickListener {

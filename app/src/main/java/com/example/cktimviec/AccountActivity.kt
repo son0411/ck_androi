@@ -26,7 +26,7 @@ class AccountActivity : AppCompatActivity() {
         if (currentUser != null) {
             // Lấy thông tin người dùng từ Firestore
             val userId = currentUser.uid
-            val userRef = firestore.collection("userInfo").document(userId)
+            val userRef = firestore.collection("users").document(userId)
 
             userRef.get().addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
@@ -34,7 +34,7 @@ class AccountActivity : AppCompatActivity() {
                     val userCode = document.getString("userCode") ?: "411"
                     val experience = document.getString("experience") ?: "Chưa cập nhật"
                     val desiredJob = document.getString("desiredJob") ?: "Chưa cập nhật"
-                    val workLocation = document.getString("workLocation") ?: "Chưa cập nhật"
+                    val workLocation = document.getString("jobLocation") ?: "Chưa cập nhật"
 
                     // Cập nhật UI
                     binding.userName.text = userName

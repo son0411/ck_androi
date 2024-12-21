@@ -15,7 +15,7 @@ class JobAdapter(private var jobList: List<Job>) : RecyclerView.Adapter<JobAdapt
             binding.tvTitle.text = job.title
             binding.tvCompany.text = job.company
             binding.tvLocation.text = job.location
-            binding.tvSalary.text = "Lương: ${job.salary} VND"
+            binding.tvSalary.text = "Lương: ${job.salary} USD"
 
             val imageUrl = job.imageUrl ?: ""
             Glide.with(binding.root.context)

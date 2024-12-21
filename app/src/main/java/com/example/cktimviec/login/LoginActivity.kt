@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cktimviec.MainActivity
 import com.example.cktimviec.databinding.ActivityLoginBinding
-import com.example.cktimviec.nhatuyendung.EmployerActivity
+import com.example.cktimviec.nhatuyendung.EmployerMainActivity
 import com.example.cktimviec.ChatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                     if (document.exists()) {
                         val role = document.getString("role")
                         if (role == "admin") {
-                            startActivity(Intent(this, EmployerActivity::class.java))
+                            startActivity(Intent(this, EmployerMainActivity::class.java))
                         } else {
                             // Kiểm tra xem người dùng đã cung cấp thông tin chưa
                             firestore.collection("userInfo").document(userId)

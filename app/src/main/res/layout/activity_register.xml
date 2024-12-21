@@ -1,32 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#F9F9F9">
 
-    <EditText
-        android:id="@+id/etEmail"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:padding="16dp"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <!-- Tiêu đề ứng dụng -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register" />
-    <Switch
-        android:id="@+id/switchRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Admin" />
+        <!-- Nhập email -->
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/custom_edittext"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp" />
 
-</LinearLayout>
+        <!-- Nhập mật khẩu -->
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/custom_edittext"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp" />
+
+
+        <!-- Nút đăng ký -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:backgroundTint="#FF018786"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:fontFamily="sans-serif-medium" />
+        <Switch
+            android:id="@+id/switchRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin" />
+
+    </LinearLayout>
+</ScrollView>
