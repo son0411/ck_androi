@@ -7,19 +7,25 @@ class JobRepository {
 
     fun getJobs(onSuccess: (List<Job>) -> Unit, onFailure: (Exception) -> Unit) {
         firestore.collection("jobs")
-            .get()
-            .addOnSuccessListener { snapshot ->
-                val jobList = snapshot.documents.mapNotNull { it.toObject(Job::class.java) }
-                onSuccess(jobList)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    onFailure(e) // Xử lý lỗi
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val jobList = snapshot.documents.mapNotNull { it.toObject(Job::class.java) }
+                    onSuccess(jobList) // Cập nhật danh sách công việc
+                }
             }
-            .addOnFailureListener { exception -> onFailure(exception) }
     }
-
     fun addJob(job: Job, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        firestore.collection("jobs").add(job)
+        val documentRef = firestore.collection("jobs").document() // Tạo ID trước
+        val jobWithId = job.copy(id = documentRef.id) // Cập nhật ID vào job
+        documentRef.set(jobWithId)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { exception -> onFailure(exception) }
     }
+
 
     fun updateJob(job: Job, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         firestore.collection("jobs").document(job.id)

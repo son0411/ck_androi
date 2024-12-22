@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">cktimviec</string>
     <string name="job_icon">Biểu tượng công việc</string>
+    <string name="google_maps_key">YOUR_GOOGLE_MAPS_API_KEY</string>
 </resources>

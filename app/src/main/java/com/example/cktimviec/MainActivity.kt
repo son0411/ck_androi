@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cktimviec.databinding.ActivityMainBinding
 import com.example.cktimviec.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private val jobViewModel: JobViewModel by viewModels()
@@ -72,10 +73,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_notifications -> {
-                    Log.d("MainActivity", "Notifications selected")
-                    // Thêm logic xử lý nếu cần
+                    Log.d("MainActivity", "Navigating to NotificationActivity")
+                    startActivity(Intent(this, NotificationActivity::class.java))
                     true
                 }
+
                 R.id.menu_account -> {
                     Log.d("MainActivity", "Navigating to AccountActivity")
                     startActivity(Intent(this, AccountActivity::class.java))

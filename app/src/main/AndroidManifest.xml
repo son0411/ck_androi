@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cktimviec"
         tools:targetApi="31">
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true">
@@ -35,12 +39,13 @@
         <activity android:name=".AccountActivity"></activity>
         <activity android:name=".JobDetailActivity"></activity>
         <activity android:name=".CreateCVActivity"></activity>
+        <activity android:name=".NotificationActivity"></activity>
         <activity android:name=".nhatuyendung.EmployerActivity" android:exported="true" />
         <activity android:name=".nhatuyendung.ApplicantListActivity" android:exported="true" />
         <activity android:name=".nhatuyendung.EmployerMainActivity" android:exported="true" />
         <activity android:name=".nhatuyendung.ViewApplicantsActivity" android:exported="true" />
         <activity android:name=".nhatuyendung.JobDetailActivity" android:exported="true" />
-
+        <activity android:name=".nhatuyendung.ContactAdminActivity" android:exported="true" />
         <activity android:name=".login.RegisterActivity" android:exported="true" />
 
         <!-- Khai báo FileProvider -->

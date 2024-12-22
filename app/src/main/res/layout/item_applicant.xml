@@ -1,36 +1,54 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tên ứng viên"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvPosition"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vị trí ứng tuyển" />
+        android:text="Email" />
 
+    <!-- Thêm TextView cho Job Title -->
     <TextView
-        android:id="@+id/tvContact"
+        android:id="@+id/tv_job_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Liên hệ" />
+        android:text="Tiêu đề công việc"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp" />
 
+    <!-- Thêm TextView cho Job Company -->
     <TextView
-        android:id="@+id/tvCv"
+        android:id="@+id/tv_job_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Công ty"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <Button
+        android:id="@+id/btn_view_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Xem CV"
-        android:visibility="gone"
-        android:textColor="@android:color/holo_blue_light"
-        android:clickable="true"
-        android:focusable="true" />
+        android:layout_marginTop="8dp"/>
+    <Button
+        android:id="@+id/btn_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liên hệ"
+        android:layout_marginTop="8dp"/>
+
 </LinearLayout>

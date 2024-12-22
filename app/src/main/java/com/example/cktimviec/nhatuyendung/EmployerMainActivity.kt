@@ -19,6 +19,9 @@ class EmployerMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEmployerMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+// Thiết lập Toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Quản lý công việc"
 
         // Cấu hình RecyclerView
         jobAdapter = JobAdapter(jobList, onItemClick = { job ->

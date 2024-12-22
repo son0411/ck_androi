@@ -1,98 +1,117 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Các trường nhập thông tin cũ -->
-    <EditText
-        android:id="@+id/etTitle"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tiêu đề công việc" />
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etCompany"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên công ty" />
+        <!-- Các trường nhập thông tin cũ -->
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tiêu đề công việc" />
 
-    <EditText
-        android:id="@+id/etLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Địa điểm" />
+        <EditText
+            android:id="@+id/etCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên công ty" />
 
-    <EditText
-        android:id="@+id/etSalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mức lương" />
+        <!-- Địa điểm - Cập nhật để chọn từ vị trí hiện tại -->
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Địa điểm"
+            android:focusable="false"
+            android:clickable="true" />
 
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mô tả công việc" />
+        <!-- Nút chọn địa điểm từ Google Maps hoặc vị trí hiện tại -->
+        <Button
+            android:id="@+id/btnSelectLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Lấy vị trí hiện tại" />
 
-    <EditText
-        android:id="@+id/etRequirements"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Yêu cầu" />
+        <EditText
+            android:id="@+id/etSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mức lương" />
 
-    <!-- Các trường mới -->
-    <EditText
-        android:id="@+id/etExperience"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Kinh nghiệm (năm)" />
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mô tả công việc" />
 
-    <Spinner
-        android:id="@+id/spinnerJobType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etRequirements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Yêu cầu" />
 
-    <EditText
-        android:id="@+id/etNumberOfPeople"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Số lượng người cần tuyển" />
+        <!-- Các trường mới -->
+        <EditText
+            android:id="@+id/etExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kinh nghiệm (năm)" />
 
-    <Spinner
-        android:id="@+id/spinnerGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spinnerJobType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/spinnerJobLevel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etNumberOfPeople"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số lượng người cần tuyển" />
 
-    <EditText
-        android:id="@+id/etDeadline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Hạn nộp hồ sơ (ngày)" />
+        <Spinner
+            android:id="@+id/spinnerGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/ivJobImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@android:drawable/ic_menu_camera"
-        android:contentDescription="Ảnh công việc"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="16dp" />
+        <Spinner
+            android:id="@+id/spinnerJobLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnSelectImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chọn ảnh" />
+        <EditText
+            android:id="@+id/etDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hạn nộp hồ sơ (ngày)" />
 
-    <Button
-        android:id="@+id/btnPostJob"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng tuyển" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/ivJobImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="Ảnh công việc"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Chọn ảnh" />
+
+        <Button
+            android:id="@+id/btnPostJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Đăng tuyển" />
+
+    </LinearLayout>
+</ScrollView>

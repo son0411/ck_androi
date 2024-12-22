@@ -29,6 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     private lateinit var firestore: FirebaseFirestore
     private var selectedFileUri: Uri? = null
+    private var jobId: String? = null  // Biến jobId có thể được lấy từ giao diện người dùng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,20 +140,65 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveFileUrlToFirestore(fileUrl: String) {
-        val cvData = hashMapOf(
-            "cvUrl" to fileUrl,
-            "timestamp" to System.currentTimeMillis()
-        )
+        // Kiểm tra nếu jobId không rỗng
+        if (!jobId.isNullOrEmpty()) {
+            // Lấy thông tin công việc từ Firestore
+            firestore.collection("jobs")
+                .document(jobId!!)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val jobTitle = document.getString("title") ?: ""
+                        val jobCompany = document.getString("company") ?: ""
+                        val jobLocation = document.getString("location") ?: ""
+                        val jobSalary = document.getLong("salary") ?: 0L
+                        val jobDescription = document.getString("description") ?: ""
 
-        firestore.collection("cv_posts")
-            .add(cvData)
-            .addOnSuccessListener {
-                showToast("Đã đăng CV thành công!")
-                finish()
-            }
-            .addOnFailureListener { e ->
-                showToast("Lỗi khi lưu dữ liệu: ${e.message}")
-            }
+                        val cvData = hashMapOf(
+                            "cvUrl" to fileUrl,
+                            "timestamp" to System.currentTimeMillis(),
+                            "jobTitle" to jobTitle,
+                            "jobCompany" to jobCompany,
+                            "jobLocation" to jobLocation,
+                            "jobSalary" to jobSalary,
+                            "jobDescription" to jobDescription
+                        )
+
+                        // Lưu dữ liệu CV vào Firestore
+                        firestore.collection("cv_posts")
+                            .add(cvData)
+                            .addOnSuccessListener {
+                                showToast("Đã đăng CV thành công!")
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                showToast("Lỗi khi lưu dữ liệu: ${e.message}")
+                            }
+                    } else {
+                        showToast("Không tìm thấy công việc.")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    showToast("Lỗi khi lấy dữ liệu công việc: ${e.message}")
+                }
+        } else {
+            // Nếu jobId rỗng, lấy danh sách công việc từ Firestore
+            firestore.collection("jobs")
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (documents.isEmpty) {
+                        showToast("Không có công việc nào.")
+                    } else {
+                        // Giả sử bạn chọn công việc đầu tiên từ danh sách
+                        val firstJob = documents.first()
+                        jobId = firstJob.id
+                        saveFileUrlToFirestore(fileUrl)  // Gọi lại hàm với jobId hợp lệ
+                    }
+                }
+                .addOnFailureListener { e ->
+                    showToast("Lỗi khi lấy danh sách công việc: ${e.message}")
+                }
+        }
     }
 
     private fun showToast(message: String) {

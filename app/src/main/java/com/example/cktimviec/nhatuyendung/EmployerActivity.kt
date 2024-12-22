@@ -1,33 +1,43 @@
 package com.example.cktimviec.nhatuyendung
 
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
-import android.provider.MediaStore
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.cktimviec.databinding.ActivityEmployerBinding
 import com.example.cktimviec.data.Job
 import com.example.cktimviec.data.JobRepository
-import java.io.ByteArrayOutputStream
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import java.util.*
+import android.net.Uri
+import android.content.Intent
 
 class EmployerActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityEmployerBinding
-    private var selectedImageUri: Uri? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var selectedLocationUri: Uri? = null
 
     companion object {
         private const val IMAGE_REQUEST_CODE = 100
+        private const val LOCATION_REQUEST_CODE = 200
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 300
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmployerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Cập nhật dữ liệu cho các Spinner
         val jobTypes = listOf("Toàn thời gian", "Bán thời gian")
@@ -48,10 +58,51 @@ class EmployerActivity : AppCompatActivity() {
 
         // Bắt sự kiện chọn ảnh
         binding.btnSelectImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, IMAGE_REQUEST_CODE)
         }
 
+        // Bắt sự kiện chọn địa điểm hiện tại
+        binding.btnSelectLocation.setOnClickListener {
+            // Kiểm tra quyền truy cập vị trí
+            if (ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                // Nếu chưa có quyền, yêu cầu cấp quyền
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+                return@setOnClickListener
+            }
+
+            // Lấy vị trí hiện tại
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    try {
+                        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                        if (addresses != null && addresses.isNotEmpty()) {
+                            val address = addresses[0]
+                            binding.etLocation.setText(address.getAddressLine(0)) // Hiển thị địa chỉ
+                            Toast.makeText(this, "Địa điểm: ${address.getAddressLine(0)}", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Không tìm thấy địa chỉ.", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this, "Không thể lấy thông tin địa chỉ: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Không thể lấy vị trí hiện tại.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // Bắt sự kiện đăng tuyển
         binding.btnPostJob.setOnClickListener {
             val title = binding.etTitle.text.toString().trim()
             val company = binding.etCompany.text.toString().trim()
@@ -66,7 +117,8 @@ class EmployerActivity : AppCompatActivity() {
             // Kiểm tra thông tin đã đủ chưa
             if (title.isEmpty() || company.isEmpty() || location.isEmpty() || salaryString.isEmpty() ||
                 description.isEmpty() || requirements.isEmpty() || experience.isEmpty() ||
-                numberOfPeopleString.isEmpty() || deadline.isEmpty()) {
+                numberOfPeopleString.isEmpty() || deadline.isEmpty()
+            ) {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -98,53 +150,61 @@ class EmployerActivity : AppCompatActivity() {
             )
 
             // Gửi công việc với ảnh
-            postJob(job, selectedImageUri)
-        }
-    }
-
-    // Xử lý kết quả chọn ảnh từ thư viện
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.data
-            binding.ivJobImage.setImageURI(selectedImageUri) // Hiển thị ảnh trong ImageView
-        }
-    }
-
-    private fun postJob(job: Job, imageUri: Uri?) {
-        val jobRepository = JobRepository()
-        imageUri?.let {
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-            val imageData = byteArrayOutputStream.toByteArray()
-
-            // Tải ảnh lên Firebase Storage và lấy URL ảnh
-            val storageReference = FirebaseStorage.getInstance().reference.child("job_images/${job.id}")
-            val uploadTask = storageReference.putBytes(imageData)
-
-            uploadTask.addOnSuccessListener {
-                storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    val imageUrl = uri.toString()
-                    val updatedJob = job.copy(id = job.id, imageUrl = imageUrl)
-                    jobRepository.addJob(updatedJob, onSuccess = {
-                        Toast.makeText(this, "Đăng việc thành công!", Toast.LENGTH_SHORT).show()
-                        clearFields()
-                    }, onFailure = { e ->
-                        Toast.makeText(this, "Đăng việc thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
-                    })
-                }
-            }.addOnFailureListener { e ->
-                Toast.makeText(this, "Tải ảnh lên thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
+            if (selectedLocationUri != null) {
+                uploadImageAndPostJob(job, selectedLocationUri!!)
+            } else {
+                postJob(job, null)
             }
-        } ?: run {
-            jobRepository.addJob(job, onSuccess = {
-                Toast.makeText(this, "Đăng việc thành công!", Toast.LENGTH_SHORT).show()
-                clearFields()
-            }, onFailure = { e ->
-                Toast.makeText(this, "Đăng việc thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
-            })
         }
+
+        // Lắng nghe thay đổi trong danh sách công việc
+        loadJobs()
+    }
+
+    private fun uploadImageAndPostJob(job: Job, imageUri: Uri) {
+        val storageRef = FirebaseStorage.getInstance().reference.child("job_images/${UUID.randomUUID()}.jpg")
+
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener { taskSnapshot ->
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    val jobWithImage = job.copy(imageUrl = uri.toString())
+                    postJob(jobWithImage, null) // Đăng công việc kèm ảnh
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Lỗi tải ảnh: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun postJob(job: Job, locationUri: Uri?) {
+        val jobRepository = JobRepository()
+
+        // Đăng công việc không có ảnh
+        jobRepository.addJob(job, onSuccess = {
+            Toast.makeText(this, "Đăng việc thành công!", Toast.LENGTH_SHORT).show()
+            clearFields()
+        }, onFailure = { e ->
+            Toast.makeText(this, "Đăng việc thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun loadJobs() {
+        val jobRepository = JobRepository()
+
+        jobRepository.getJobs(
+            onSuccess = { jobs ->
+                // Cập nhật giao diện hoặc danh sách công việc
+                updateJobList(jobs)
+            },
+            onFailure = { e ->
+                Toast.makeText(this, "Lỗi tải công việc: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    private fun updateJobList(jobs: List<Job>) {
+        // Cập nhật dữ liệu lên RecyclerView hoặc ListView
+        // jobAdapter.submitList(jobs) // Giả sử bạn có adapter tên là jobAdapter
     }
 
     private fun clearFields() {
@@ -158,5 +218,27 @@ class EmployerActivity : AppCompatActivity() {
         binding.etNumberOfPeople.text.clear()
         binding.etDeadline.text.clear()
         binding.ivJobImage.setImageResource(android.R.drawable.ic_menu_camera) // Reset ảnh
+    }
+
+    // Xử lý kết quả chọn ảnh từ thư viện và vị trí hiện tại
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            selectedLocationUri = data.data
+            binding.ivJobImage.setImageURI(selectedLocationUri) // Hiển thị ảnh trong ImageView
+        }
+    }
+
+    // Xử lý kết quả yêu cầu quyền truy cập vị trí
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Nếu người dùng cấp quyền, gọi lại hàm lấy vị trí
+                binding.btnSelectLocation.performClick()
+            } else {
+                Toast.makeText(this, "Cần quyền truy cập vị trí để lấy địa điểm", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
