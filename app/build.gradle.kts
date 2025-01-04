@@ -1,22 +1,9 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // Android Gradle Plugin version
-        classpath("com.android.tools.build:gradle:8.6.0")
-        // Google Services plugin version
-        classpath("com.google.gms:google-services:4.3.15")
-    }
-}
-
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services") // Plugin để sử dụng Google Services (Firebase)
-    id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android") version "1.9.0" apply true
     id("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("com.google.gms.google-services") // Firebase plugin
 }
 
 android {
@@ -44,12 +31,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17" // Chạy trên JDK 17
     }
 
     buildFeatures {
@@ -63,45 +50,44 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.firebase:firebase-auth:22.1.0") // Firebase Auth
-    implementation("com.google.firebase:firebase-storage:20.3.0") // Firebase Storage
-    implementation("com.github.bumptech.glide:glide:4.15.1") // Glide for image loading
-    kapt("com.github.bumptech.glide:compiler:4.15.1")
+
+    // Firebase dependencies
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // Glide for image loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("com.google.android.gms:play-services-maps:17.0.1")
-    implementation("com.google.android.gms:play-services-location:18.0.0")
-
-    // Firebase Database
-    implementation("com.google.firebase:firebase-database:20.3.0")
-
-    // Google Play Services Authentication
-    implementation("com.google.android.gms:play-services-auth:20.0.0")
-
-    // Firebase Firestore
-    implementation("com.google.firebase:firebase-firestore-ktx:24.8.0")
-
-    // Firebase BOM (quản lý phiên bản cho các dịch vụ Firebase)
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("com.google.firebase:firebase-analytics-ktx") // Firebase Analytics
 
     // Lifecycle and ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 
+    // Google Play Services Authentication
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.maps.android:android-maps-utils:2.3.0")
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")
 
-    // Activity and Fragment
+    // Activity and Fragment KTX
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
-    // Testing
+    // Testing dependencies
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-// Áp dụng plugin Google Services để sử dụng Firebase
+// Apply Firebase plugin
 apply(plugin = "com.google.gms.google-services")

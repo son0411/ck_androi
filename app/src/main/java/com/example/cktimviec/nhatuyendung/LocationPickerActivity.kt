@@ -41,8 +41,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        mMap = googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
 
         // Đặt vị trí mặc định (Hà Nội)
         val defaultLocation = LatLng(21.0285, 105.8542)
